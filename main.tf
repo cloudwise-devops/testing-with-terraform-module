@@ -1,24 +1,24 @@
 resource "google_service_account" "default" {
   account_id   = "sa-${random_string.string.result}"
   display_name = "sa-${random_string.string.result}"
-  project = var.gcp_project
+  project      = var.gcp_project
 }
 
 resource "random_string" "string" {
-  length = 4
-  upper = false
+  length  = 4
+  upper   = false
   special = false
-  number = false
+  number  = false
 }
 
 resource "google_compute_instance" "default" {
-  count = var.machine_create ? 1 : 0
+  count        = var.machine_create ? 1 : 0
   name         = "${local.name_substrate}-machine"
-  machine_type =   var.machine_type
+  machine_type = var.machine_type
   zone         = var.gcp_zone
-  project = var.gcp_project
+  project      = var.gcp_project
   tags = [
-    "foo", "bar"]
+  var.env, "bar"]
 
   boot_disk {
     initialize_params {
@@ -31,7 +31,7 @@ resource "google_compute_instance" "default" {
 
 
   network_interface {
-    network = var.vcn_name
+    network    = var.vcn_name
     subnetwork = var.vcn_subnetwork
   }
 
@@ -48,9 +48,9 @@ resource "google_compute_instance" "default" {
 }
 
 resource "google_storage_bucket" "bucket" {
-  count = var.buckets_create ? 1 : 0
+  count    = var.buckets_create ? 1 : 0
   location = var.gcp_region
-  project = var.gcp_project
+  project  = var.gcp_project
   name     = "${local.name_substrate}_bucket"
 }
 
