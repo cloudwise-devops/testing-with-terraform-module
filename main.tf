@@ -14,7 +14,7 @@ resource "random_string" "string" {
 resource "google_compute_instance" "default" {
   count = var.machine_create ? 1 : 0
   name         = "${local.name_substrate}-machine"
-  machine_type = var.machine_type
+  machine_type =   var.machine_type
   zone         = var.gcp_zone
   project = var.gcp_project
   tags = [
