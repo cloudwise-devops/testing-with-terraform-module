@@ -1,6 +1,6 @@
 resource "google_service_account" "default" {
-  account_id   = "${local.name_substrate}_service_account_id"
-  display_name = "Service Account"
+  account_id   = "sa-${random_string.string.result}"
+  display_name = "sa-${random_string.string.result}"
   project = var.gcp_project
 }
 
@@ -17,7 +17,8 @@ resource "google_compute_instance" "default" {
   machine_type = var.machine_type
   zone         = var.gcp_zone
   project = var.gcp_project
-  tags = ["foo", "bar"]
+  tags = [
+    "foo", "bar"]
 
   boot_disk {
     initialize_params {
@@ -27,9 +28,8 @@ resource "google_compute_instance" "default" {
       }
     }
   }
-  scratch_disk {
-    interface = "SCSI"
-  }
+
+
   network_interface {
     network = var.vcn_name
     subnetwork = var.vcn_subnetwork

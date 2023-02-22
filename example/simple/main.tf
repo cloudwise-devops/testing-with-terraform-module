@@ -5,7 +5,7 @@ resource "google_compute_network" "vpc_network" {
 }
 
 resource "google_compute_subnetwork" "subnetwork" {
-  ip_cidr_range = "192.168.11.0./24"
+  ip_cidr_range = "192.168.11.0/24"
   name          = "test"
   network       = google_compute_network.vpc_network.id
 }
